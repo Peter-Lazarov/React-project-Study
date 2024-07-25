@@ -1,0 +1,32 @@
+body header{
+    text-align: center;
+}
+
+body nav{
+    display: inline-block;
+    border: 1px solid #aeddff;
+    border-radius: 20px;
+    background: #aeddff;
+    overflow: hidden;
+}
+
+body nav a{
+    padding: 1em;
+    display: inline-block;
+    text-decoration: none;
+    color: #0042a9;
+}
+
+
+body nav a:hover{
+    padding: 1em;
+    display: inline-block;
+    text-decoration: none;
+    color: #aeddff;
+    background: #0042a9;
+}
+
+.userButtons,
+.guestButtons{
+    display: inline-block;
+}
