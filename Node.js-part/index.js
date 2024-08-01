@@ -27,7 +27,7 @@ const server = express();
 //     next();
 // });
 server.use(cors({
-    origin: 'http://localhost:4200',
+    origin: 'http://localhost:5173',
     credentials: true
   }));
 
@@ -47,3 +47,4 @@ mongoose.connection.on('error', (error) => console.log(error));
 // });
 
 server.listen(3000);
+console.log('work on port 3000');

@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     coursesLecturer: [{
         type: mongoose.Types.ObjectId,
-        ref: 'System'
+        ref: 'Course'
     }],
     // publishedCommentary: [{
     //     type: mongoose.Types.ObjectId,
