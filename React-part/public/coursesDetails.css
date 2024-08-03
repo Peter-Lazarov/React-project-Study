@@ -1,0 +1,37 @@
+.courseDetails {
+    margin: 3%;
+}
+
+.courseDetails .information{
+    display: flex;
+    padding: 3%;
+    background: #beecff;
+    border-radius: 10px;
+    margin-bottom: 2%;
+}
+
+.courseDetails .information img {
+    margin-right: 1em;
+    margin-bottom: 1em;
+    max-width: 450px;
+}
+
+.courseDetails .commentaries {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.courseDetails .lecturer,
+.courseDetails .lecturer p{
+    text-align: right;
+}
+
+.courseDetails .headline {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.courseDetails .buttons{
+    margin: 0 2% 0 2%;
+}

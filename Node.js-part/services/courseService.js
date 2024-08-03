@@ -2,10 +2,10 @@ const Courses = require('../models/Course');
 const User = require('../models/User')
 
 exports.getAll = () => Courses.find();
-exports.create = async (userId, coursesData) => {
+exports.create = async (coursesData) => {
     const createdCourses = await Courses.create({
-        lecturer: userId,
-        ...coursesData
+        ...coursesData,
+        lecturer: coursesData.userId
     });
 
     //await User.findByIdAndUpdate(userId, { $push: { coursesLecturer: createdCourses._id } });

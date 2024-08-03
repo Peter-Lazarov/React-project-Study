@@ -1,11 +1,19 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
+import { useContext } from "react"
 
-import { AuthenticationContextProvider } from "./components/user/AuthenticationContext"
-import Header from "./components/header/Header"
-import Register from "./components/user/Register"
-import Login from "./components/user/Login"
+import { AuthenticationContext, AuthenticationContextProvider } from "./user/AuthenticationContext"
+import Header from "./header/Header"
+import Home from "./home/Home"
+import Login from "./user/Login"
+import Register from "./user/Register"
+import Logout from "./user/Logout"
+import CoursesAll from "./course/CoursesAll"
+import CourseCreate from "./course/CourseCreate"
+import CourseDetails from "./course/CourseDetails"
 
 function App() {
+
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <>
@@ -13,13 +21,13 @@ function App() {
         <Header />
         <main id="main-content">
           <Routes>
+            <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/logout' element={<Logout />} />
-            {/*<Route path='/' element={<Home />} /> */}
-            {/*<Route path='/courses' element={<CourseList />} />
-          <Route path='/courses/create' element={<CourseCreate />} />
-          <Route path='/courses/:courseId/details' element={<CourseDetails />} /> */}
+            <Route path='/courses' element={<CoursesAll />} />
+            <Route path='/courses/create' element={isAuthenticated ? <CourseCreate /> : <Navigate to='/login' />} />
+            <Route path='/courses/:courseId/details' element={<CourseDetails />} />
           </Routes>
         </main>
       </AuthenticationContextProvider>

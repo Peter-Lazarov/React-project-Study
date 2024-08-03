@@ -10,13 +10,14 @@ courseController.get('/', async (request, response) => {
     response.json(coursesAll);
 });
 
-courseController.post('/add', async (request, response) => {
+courseController.post('/create', async (request, response) => {
 //courseController.post('/add', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
     const courseForm = request.body;
 
     try {
         //const createdCourse = await courseService.create(request.user._id, courseForm);
-        const createdCourse = await courseService.create("John", courseForm);
+        const createdCourse = await courseService.create(courseForm);
+        //console.log(request.body);
 
         response.json(createdCourse);
     } catch (error) {
@@ -34,13 +35,11 @@ courseController.post('/add', async (request, response) => {
 
 courseController.get('/:courseId/details', async (request, response) => {
     const courseDetails = await courseService.getOne(request.params.courseId).lean();
-    const courseLecturerId = courseDetails.publisher.toString();
-
-    const isPublisher = courseLecturerId && courseLecturerId == request.user?._id;
-
-    request.courseCurrent = courseDetails;
+    //const courseLecturerId = courseDetails.publisher.toString();
+    //const isPublisher = courseLecturerId && courseLecturerId == request.user?._id;
+    //request.courseCurrent = courseDetails;
     
-    response.json({ ...courseDetails, isPublisher});
+    response.json({ ...courseDetails});
 });
 
 module.exports = courseController;

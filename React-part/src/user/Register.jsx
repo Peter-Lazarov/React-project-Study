@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import useForm from "../../hooks/useForm";
+import useForm from "../hooks/useForm";
 import { useRegister } from "./useAuthentication";
 
 

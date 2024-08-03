@@ -3,7 +3,8 @@ const userService = require('../services/userService');
 
 const { isAuthenticated } = require('../middlewares/userMiddleware');
 const { getErrorMessage } = require('../utility/errorsUtility');
-const { authorisationCookie } = require('../utility/cookie');
+const { authorisationCookie, userIdCookie, userNameCookie, userEmailCookie } = require('../utility/cookie');
+const { findOneAndDelete } = require('../models/Course');
 
 userController.post('/register', async (request, response) => {
     try {
@@ -14,8 +15,9 @@ userController.post('/register', async (request, response) => {
 
         //response.cookie(authorisation, token, { httpOnly: true, sameSite: 'none', secure: true })
         //response.cookie(authorisationCookie, token, { httpOnly: true, sameSite: 'none', secure: false }); //this is better but require https
+                
         response.cookie(authorisationCookie, token, { httpOnly: false });
-
+ 
         response.json({
             _id,
             email,
@@ -40,12 +42,20 @@ userController.post('/login', async (request, response) => {
         const userData = request.body;
         //console.log('controler register ' + request.body);
 
-        const { _id, email, token } = await userService.login(userData);
+        const { _id, email, token, name } = await userService.login(userData);
 
         //response.cookie(authorisationCookie, token, { httpOnly: false, sameSite: 'none', secure: false }); //this is better but require https
         //console.log(authorisationCookie, token);
 
+        response.cookie(userIdCookie, _id.valueOf(), { httpOnly: false });
+        response.cookie(userEmailCookie, email.valueOf(), { httpOnly: false });
         response.cookie(authorisationCookie, token, { httpOnly: false});
+        response.cookie(userNameCookie, name, { httpOnly: false });
+
+        //console.log(_id.valueOf());
+        //console.log(email);
+        //console.log(name);
+        //console.log(token);
 
         response.json({
             _id,
@@ -68,6 +78,9 @@ userController.post('/login', async (request, response) => {
 userController.post('/logout', isAuthenticated, (request, response) => {
     //console.log('in logout and delete');
     response.clearCookie(authorisationCookie).status(204);
+    response.clearCookie(userIdCookie).status(204);
+    response.clearCookie(userEmailCookie).status(204);
+    response.clearCookie(userNameCookie).status(204);
     response.json({ ok: true });
 });
 

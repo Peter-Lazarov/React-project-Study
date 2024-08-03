@@ -1,0 +1,46 @@
+.coursesList main{
+    margin: 2%;
+}
+
+.coursesList h2 {
+    text-align: center;
+}
+
+.coursesList ul {
+    list-style-type: none;
+}
+
+.coursesList li {
+    display: inline-block;
+    margin: 2%;
+    height: 350px;
+    vertical-align: top;
+}
+
+.coursesList img {
+    max-width: 320px;
+    padding: 15px;
+}
+
+.coursesList a {
+    border: 3px solid gray;
+    border-radius: 10px;
+    /* padding: 4%; */
+    text-align: center;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+.coursesList a:hover {
+    background-color: #aeddff;
+}
+
+.coursesList .create {
+    max-width: 80%;
+    text-align: center;
+    align-content: center;
+    margin: 0 9%;
+}

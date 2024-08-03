@@ -1,5 +1,7 @@
-export const getAccessToken = () => {
-    const authenticationJSON = localStorage.getItem('authentication');
+import { useCookies } from "react-cookie";
+
+const getAccessToken = () => {
+    const authenticationJSON = localStorage.getItem('authorisation');
     
     if (authenticationJSON == null || authenticationJSON == 'null') {
         return '';
@@ -9,12 +11,15 @@ export const getAccessToken = () => {
     return authenticationData.accessToken;
 }
 
+
 async function get(url){
     const options = {};
     options.method = 'GET';
 
     //const accessToken = localStorage.getItem('accessToken');
-    const accessToken = getAccessToken();
+    //const accessToken = getAccessToken();
+    
+    const accessToken = '';
     //console.log('accessToken ' + accessToken);
 
     if(accessToken){
@@ -49,7 +54,7 @@ async function getUnauthorised(url){
     return result;
 }
 
-async function post(url, data){
+async function post(url, data, accessToken){
     const options = {};
     options.method = 'POST';
 
@@ -58,7 +63,7 @@ async function post(url, data){
     };
 
     //const accessToken = localStorage.getItem('accessToken');
-    const accessToken = getAccessToken();
+    //const accessToken = getAccessToken();
     
     if(accessToken){
         options.headers['X-Authorization'] = accessToken;

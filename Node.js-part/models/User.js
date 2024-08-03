@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     //     ref: 'Commentary'
     // }]
 },
-{ timestamps: true });
+    { timestamps: true });
 
 userSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, 12);

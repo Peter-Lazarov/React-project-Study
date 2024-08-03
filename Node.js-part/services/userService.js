@@ -46,7 +46,8 @@ exports.login = async (userData) => {
     return {
         _id: userFromDatabase._id,
         email: userFromDatabase.email,
-        token
+        token,
+        name: userFromDatabase.name
     }
 };
 
