@@ -16,11 +16,11 @@ const courseSchema = new mongoose.Schema({
         //match: /^https?:\/\/.*$/,
         required: false
     },
-    lecturer: {
+    lecturerId: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    userName: {
+    lecturerName: {
         type: String,
         ref: 'User'
     }

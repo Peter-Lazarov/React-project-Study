@@ -10,8 +10,7 @@ export const loginRequest = async (email, password) => {
 };
 
 export const loginRequestAxios = async (email, password) => {
-    const responseObject = await axios.post(`${server_url}/user/login`, { email, password },
-        { withCredentials: true });
+    const responseObject = await axios.post(`${server_url}/user/login`, { email, password }, { withCredentials: true });
 
     const authenticationData = responseObject.data;
     //console.log(authenticationData);
@@ -29,6 +28,6 @@ export const logoutRequest = async (accessToken) => {
     requests.post(`${server_url}/user/logout`, undefined, accessToken);
 }
 
-export const logoutRequestAxios = async (accessToken) => {
-    await axios.post(`${server_url}/user/logout`, {undefined, accessToken}, { withCredentials: true });
+export const logoutRequestAxios = async () => {
+    await axios.post(`${server_url}/user/logout`, undefined, { withCredentials: true });
 }

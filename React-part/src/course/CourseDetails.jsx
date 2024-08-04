@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -7,6 +7,7 @@ import { useOneCourse } from "./useCourses";
 import useForm from "../hooks/useForm";
 
 import { AuthenticationContext } from "../user/AuthenticationContext";
+import { deleteCourse } from "./coursesService";
 
 const initialValues = {
     comment: ''
@@ -19,17 +20,28 @@ export default function CourseDetails() {
     //console.log(courseId);
 
     const [course] = useOneCourse(courseId);
+    //console.log(course);
 
     //const [comments, setComments] = useGetAllComments(courseId);
     //const [comments, dispatchComments] = useGetAllComments(courseId);
     //const createComment = useCreateComment();
 
-    const { isAuthenticated } = useContext(AuthenticationContext);
+    const { isAuthenticated, accessToken } = useContext(AuthenticationContext);
     const [cookies] = useCookies();
     //console.log('here 1 ' + cookies.userId);
     const userId = cookies.userId;
 
-    const isLecturer = userId == course.lecturer;
+    const isLecturer = userId == course.lecturerId;
+    const navigate = useNavigate();
+
+    async function courseDeleteOnClick(){
+        try {
+            await deleteCourse(courseId, accessToken);
+            navigate('/courses');
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const {
         changeHandler,
@@ -76,11 +88,11 @@ export default function CourseDetails() {
                     </div>
                 </div>
                 <div className="lecturer">
-                    <p>Lecturer {course.userName}</p>
+                    <p>Lecturer - {course.lecturerName}</p>
                 </div>
                 {isLecturer && (<div className="buttons">
-                    <Link href="#">Edit</Link>
-                    <Link href="#">Delete</Link>
+                    <Link onClick={courseDeleteOnClick} id='delete' >Delete</Link>
+                    <Link to={`/courses/${course._id}/edit`} id='edit' >Edit</Link>
                 </div>)}
             </div>
             

@@ -10,7 +10,7 @@ export default function CoursesAll() {
 
     return (
         <>
-            <div className="coursesList">
+            <div className="coursesList main">
                 {isAuthenticated && <Link to="/courses/create" className="create">Create New Course</Link>}
 
                 {coursesAll.length > 0 ? (
@@ -37,3 +37,4 @@ export default function CoursesAll() {
         </>
     )
 }
+

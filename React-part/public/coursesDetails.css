@@ -35,3 +35,36 @@
 .courseDetails .buttons{
     margin: 0 2% 0 2%;
 }
+
+.courseDetails a {
+    display: inline-block;
+    border: 3px solid gray;
+    border-radius: 10px;
+    /* padding: 4%; */
+    font-size: 110%;
+    text-align: center;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+.courseDetails a#edit{
+    width: 30%;
+}
+
+.courseDetails a#edit:hover {
+    background-color: #fffd6c;
+}
+
+.courseDetails a#delete{
+    width: 10%;
+    margin: 0 20% 0 0;
+}
+
+.courseDetails a#delete:hover {
+    background-color: #ff7878;
+}
+
+/* .courseDetails a:hover {
+    background-color: #aeddff;
+} */

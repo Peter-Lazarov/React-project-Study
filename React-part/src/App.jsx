@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useContext } from "react"
 
-import { AuthenticationContext, AuthenticationContextProvider } from "./user/AuthenticationContext"
+import { AuthenticationContextProvider } from "./user/AuthenticationContext"
 import Header from "./header/Header"
 import Home from "./home/Home"
 import Login from "./user/Login"
@@ -10,10 +10,10 @@ import Logout from "./user/Logout"
 import CoursesAll from "./course/CoursesAll"
 import CourseCreate from "./course/CourseCreate"
 import CourseDetails from "./course/CourseDetails"
+import ProtectedRoute from "./user/ProtectedRoute"
+import CourseEdit from "./course/CourseEdit"
 
 function App() {
-
-  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <>
@@ -26,8 +26,11 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/courses' element={<CoursesAll />} />
-            <Route path='/courses/create' element={isAuthenticated ? <CourseCreate /> : <Navigate to='/login' />} />
             <Route path='/courses/:courseId/details' element={<CourseDetails />} />
+            <Route element={<ProtectedRoute />} >
+              <Route path='/courses/create' element={<CourseCreate />} />
+              <Route path='/courses/:courseId/edit' element={<CourseEdit />} />
+            </Route>
           </Routes>
         </main>
       </AuthenticationContextProvider>
@@ -36,3 +39,4 @@ function App() {
 }
 
 export default App
+

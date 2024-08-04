@@ -1,17 +1,3 @@
-import { useCookies } from "react-cookie";
-
-const getAccessToken = () => {
-    const authenticationJSON = localStorage.getItem('authorisation');
-    
-    if (authenticationJSON == null || authenticationJSON == 'null') {
-        return '';
-    }
-
-    const authenticationData = JSON.parse(authenticationJSON);
-    return authenticationData.accessToken;
-}
-
-
 async function get(url){
     const options = {};
     options.method = 'GET';
@@ -83,8 +69,61 @@ async function post(url, data, accessToken){
     return result;
 }
 
+async function putWithCredentials(url, data, accessToken){
+    const options = {};
+    options.method = 'PUT';
+
+    options.headers = {
+        'Content-Type': 'application/json'
+    };
+
+    if(accessToken){
+        options.headers['X-Authorization'] = accessToken;
+    }
+
+    options.body = JSON.stringify(data);
+    
+    options.credentials = 'include';
+
+    const response = await fetch(url, options);
+    const result = await response.json();
+    
+    if (!response.ok) {
+        throw result;
+    }
+    return result;
+}
+
+async function deleteWithCredentials(url, data, accessToken){
+    const options = {};
+    options.method = 'DELETE';
+
+    options.headers = {
+        'Content-Type': 'application/json'
+    };
+    
+    if(accessToken){
+        options.headers['X-Authorization'] = accessToken;
+    }
+
+    options.body = JSON.stringify(data);
+
+    options.credentials = 'include';
+    
+    const response = await fetch(url, options);
+    const result = await response.json();
+    
+    if (!response.ok) {
+        throw result;
+    }
+
+    return result;
+}
+
 export default {
     get,
+    getUnauthorised,
     post,
-    getUnauthorised
+    putWithCredentials,
+    deleteWithCredentials
 };

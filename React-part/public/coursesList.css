@@ -1,5 +1,6 @@
-.coursesList main{
+.coursesList.main{
     margin: 2%;
+    text-align: center;
 }
 
 .coursesList h2 {

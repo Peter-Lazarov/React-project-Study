@@ -28,10 +28,12 @@ export default function CourseCreate() {
     const createHandler = async (values) => {
         try {
             const valuesWithLecturer = {...values, userId, userName};
-            const { _id: courseId } = await createCourse(valuesWithLecturer);
-            //console.log('here 1 ' + courseId);
-            //console.log(valuesWithLecturer);
-            navigate(`/courses/${courseId}/details`);
+            
+            //const { _id: courseId } = await createCourse(valuesWithLecturer);
+            const createdCourse = await createCourse(valuesWithLecturer);
+            //console.log(result);
+            //console.log(createdCourse);
+            navigate(`/courses/${createdCourse._id}/details`);
         } catch (error) {
             console.log(error);
         }
@@ -54,7 +56,7 @@ export default function CourseCreate() {
                         type="text" 
                         name="name"
                         id="name"
-                        value={formValues.imageUrl}
+                        value={formValues.name}
                         onChange={changeHandler}
                          />
                     </div>
@@ -65,7 +67,7 @@ export default function CourseCreate() {
                         type="text" 
                         name="description"
                         id="description"
-                        value={formValues.imageUrl}
+                        value={formValues.description}
                         onChange={changeHandler}
                         ></textarea>
                     </div>
@@ -76,7 +78,7 @@ export default function CourseCreate() {
                         type="text" 
                         name="image"
                         id="image"
-                        value={formValues.imageUrl}
+                        value={formValues.image}
                         onChange={changeHandler}
                         />
                     </div>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import requests from "../services/requests";
 import { server_url } from "../services/serverUrl";
 
@@ -20,6 +21,18 @@ export const createCourse = async (courseData) => {
     // console.log('in api');
     // console.log(courseData);
     const result = await requests.post(`${server_url}/courses/create`, courseData);
+
+    return result;
+}
+
+export const editCourse = async (courseId, courseData, accessToken) => {
+    const result = await requests.putWithCredentials(`${server_url}/courses/${courseId}/update`, courseData, accessToken);
+
+    return result;
+}
+
+export const deleteCourse = async (courseId, accessToken) => {
+    const result = await requests.deleteWithCredentials(`${server_url}/courses/${courseId}/delete`, undefined, accessToken);
 
     return result;
 }

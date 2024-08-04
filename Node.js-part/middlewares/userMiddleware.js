@@ -25,7 +25,7 @@ exports.isAuthenticated = (request, response, next) => {
     if (!request.user) {
         return response.redirect('/user/login');
     }
-    //console.log('inAuthenticate ' + JSON.stringify(request.user));
+    //console.log('isAuthenticated ' + JSON.stringify(request.user));
     next();
 };
 

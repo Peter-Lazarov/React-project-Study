@@ -1,10 +1,11 @@
 body header{
     text-align: center;
+    margin: 0 0 2% 0;
 }
 
 body nav{
     display: inline-block;
-    border: 1px solid #aeddff;
+    /* border: 1px solid #aeddff; */
     border-radius: 20px;
     background: #aeddff;
     overflow: hidden;
@@ -17,13 +18,13 @@ body nav a{
     color: #0042a9;
 }
 
-
 body nav a:hover{
     padding: 1em;
     display: inline-block;
     text-decoration: none;
-    color: #aeddff;
-    background: #0042a9;
+    background: white;
+    /* color: #aeddff; */
+    /* background: #0042a9; */
 }
 
 .userButtons,

@@ -18,7 +18,7 @@ courseController.post('/create', async (request, response) => {
         //const createdCourse = await courseService.create(request.user._id, courseForm);
         const createdCourse = await courseService.create(courseForm);
         //console.log(request.body);
-
+        //console.log(createdCourse);
         response.json(createdCourse);
     } catch (error) {
         console.error(error);
@@ -41,5 +41,70 @@ courseController.get('/:courseId/details', async (request, response) => {
     
     response.json({ ...courseDetails});
 });
+
+courseController.put('/:courseId/update', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
+    const searchedCourseId = request.params.courseId;
+    const currentUserId = request.user?._id;
+    
+    if (isCourseLecturer(searchedCourseId, currentUserId)) {
+        const courseEditForm = request.body;
+        //console.log(courseEditForm);
+        try {
+            const courseEdited = await courseService.edit(searchedCourseId, courseEditForm);
+            //response.redirect(`/course/${request.params.courseId}/details`);
+            //console.log(courseEdited);
+            response.json(courseEdited);
+        } catch (error) {
+            console.error(error);
+
+            const errorMessage = getErrorMessage(error);
+
+            if (error.name === 'ValidationError') {
+                response.status(400).json({ error: errorMessage });
+            } else {
+                response.status(500).json({ error: errorMessage });
+            }
+        }
+    } else {
+        response.redirect('/course');
+    }
+});
+
+courseController.delete('/:courseId/delete', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
+    const searchedCourseId = request.params.courseId;
+    const currentUserId = request.user?._id;
+    //console.log('searchedCourseId ' + searchedCourseId);
+    //console.log('currentUserId ' + currentUserId);
+
+    if (isCourseLecturer(searchedCourseId, currentUserId)) {
+        try {
+            const deletedSystem = await courseService.delete(request.params.courseId, request.user._id);
+            //response.redirect('/course');
+            response.json(deletedSystem);
+        } catch (error) {
+            console.error(error);
+
+            const errorMessage = getErrorMessage(error);
+
+            if (error.name === 'ValidationError') {
+                response.status(400).json({ error: errorMessage });
+            } else {
+                response.status(500).json({ error: errorMessage });
+            }
+        }
+    } else {
+        response.status(403).json({ error: "User is not the publisher of the course." });
+    }
+});
+
+async function isCourseLecturer(searchedCourseId, currentUserId) {
+    const course = await courseService.getOne(searchedCourseId);
+    //console.log(course);
+
+    if (course && currentUserId == course.lecturerId.toString()) {
+        return true;
+    }
+    return false;
+};
 
 module.exports = courseController;

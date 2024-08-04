@@ -16,12 +16,22 @@ export function useAllCourses() {
     return [course, setCourse];
 }
 
-export function useOneCourse(courseId){
-    const [course, setCourse] = useState({});
+export function useOneCourse(courseId) {
+    const initialValues = {
+        _id: "",
+        name: "",
+        description: "",
+        image: "",
+        lecturerId: "",
+        lecturerName: "",
+        __v: 0
+    }
     
+    const [course, setCourse] = useState(initialValues);//useState({});
+
     useEffect(() => {
         (async () => {
-            
+
             const courseOne = await getOneCourse(courseId);
             setCourse(courseOne);
             //console.log(courseId);
