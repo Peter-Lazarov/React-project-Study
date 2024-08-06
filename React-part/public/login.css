@@ -1,0 +1,26 @@
+.login input:focus,
+.login textarea:focus,
+.login select:focus,
+.login button:focus {
+    outline: none;
+}
+
+.login fieldset{
+    text-align: center;
+    /* text-align: right; */
+    /* margin-right: 45%; */
+    border: none;
+}
+
+.login label{
+    margin-right: 2%;
+}
+
+.login input{
+
+}
+
+.login input:focus {
+    background-color: #aeddff;
+}
+

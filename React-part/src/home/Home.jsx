@@ -1,7 +1,11 @@
-export default function Home(){
+export default function Home() {
     return (
         <>
-            <p>Home works!</p>
+            <div className="home">
+                {/* <p>Home works!</p> */}
+
+                <img src="../public/Improve.png" alt="" />
+            </div>
         </>
     )
 }

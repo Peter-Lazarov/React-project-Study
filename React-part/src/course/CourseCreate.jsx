@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import useForm from "../hooks/useForm";
 import { useCreateCourse } from "./useCourses";
+import { AuthenticationContext } from "../user/AuthenticationContext";
 
 const initialValues = {
     name: '',
@@ -19,6 +20,9 @@ export default function CourseCreate() {
     const [cookies] = useCookies();
     //console.log('here 1 ' + cookies.userName);
     //console.log('here 1 ' + cookies.userId);
+
+    const { accessToken } = useContext(AuthenticationContext);
+
     const userId = cookies.userId;
     const userName = cookies.userName;
     // useEffect(() => {
@@ -28,9 +32,10 @@ export default function CourseCreate() {
     const createHandler = async (values) => {
         try {
             const valuesWithLecturer = {...values, userId, userName};
+
             
             //const { _id: courseId } = await createCourse(valuesWithLecturer);
-            const createdCourse = await createCourse(valuesWithLecturer);
+            const createdCourse = await createCourse(valuesWithLecturer, accessToken);
             //console.log(result);
             //console.log(createdCourse);
             navigate(`/courses/${createdCourse._id}/details`);

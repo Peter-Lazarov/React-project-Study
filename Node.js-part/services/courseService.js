@@ -26,3 +26,4 @@ exports.delete = async (courseId, userId) => {
 
     return courseDeleted;
 };
+exports.search = (searchedWord) => Course.find({name: new RegExp(searchedWord, 'i')});

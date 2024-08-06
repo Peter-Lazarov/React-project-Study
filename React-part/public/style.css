@@ -1,4 +1,7 @@
+@import "home.css";
+@import "login.css";
+@import "register.css";
 @import "navigation.css";
 @import "coursesList.css";
 @import "coursesDetails.css";
-
+@import "coursesSearch.css";

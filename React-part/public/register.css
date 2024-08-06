@@ -1,0 +1,26 @@
+.register input:focus,
+.register textarea:focus,
+.register select:focus,
+.register button:focus {
+    outline: none;
+}
+
+.register fieldset{
+    text-align: center;
+    /* text-align: right; */
+    /* margin-right: 45%; */
+    border: none;
+}
+
+.register label{
+    margin-right: 2%;
+}
+
+.register input{
+
+}
+
+.register input:focus {
+    background-color: #aeddff;
+}
+

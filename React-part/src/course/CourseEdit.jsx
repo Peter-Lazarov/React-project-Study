@@ -8,12 +8,6 @@ import { editCourse, getOneCourse } from "./coursesService";
 import { AuthenticationContext } from "../user/AuthenticationContext";
 import { useState } from "react";
 
-const initialValues = {
-    name: '',
-    description: '',
-    image: '',
-};
-
 export default function CourseEdit() {
     const { courseId } = useParams();
     //const [course, setCourse] = useOneCourse(courseId);

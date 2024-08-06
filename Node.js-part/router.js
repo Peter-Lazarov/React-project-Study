@@ -7,6 +7,7 @@ router.use('/courses', courseController);
 router.use('/user', userController);
 
 router.all('*', (request, response) => {
+    console.log(request);
     response.render('404');
 });
 

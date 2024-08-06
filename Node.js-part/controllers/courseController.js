@@ -10,8 +10,20 @@ courseController.get('/', async (request, response) => {
     response.json(coursesAll);
 });
 
-courseController.post('/create', async (request, response) => {
-//courseController.post('/add', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
+courseController.get('/search', async (request, response) => {
+    const searchedWord = request.query.searchedWord;
+    //console.log(searchedWord);
+    try {
+        const allFindedCourses = await courseService.search(searchedWord);
+
+        response.json(allFindedCourses);
+    } catch (error) {
+        response.status(500).send(error.message);
+    }
+});
+
+courseController.post('/create', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
+    //courseController.post('/add', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
     const courseForm = request.body;
 
     try {
@@ -38,14 +50,14 @@ courseController.get('/:courseId/details', async (request, response) => {
     //const courseLecturerId = courseDetails.publisher.toString();
     //const isPublisher = courseLecturerId && courseLecturerId == request.user?._id;
     //request.courseCurrent = courseDetails;
-    
-    response.json({ ...courseDetails});
+
+    response.json({ ...courseDetails });
 });
 
 courseController.put('/:courseId/update', userMiddleware.attachUserInRequest, userMiddleware.isAuthenticated, async (request, response) => {
     const searchedCourseId = request.params.courseId;
     const currentUserId = request.user?._id;
-    
+
     if (isCourseLecturer(searchedCourseId, currentUserId)) {
         const courseEditForm = request.body;
         //console.log(courseEditForm);

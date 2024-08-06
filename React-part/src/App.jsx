@@ -12,6 +12,7 @@ import CourseCreate from "./course/CourseCreate"
 import CourseDetails from "./course/CourseDetails"
 import ProtectedRoute from "./user/ProtectedRoute"
 import CourseEdit from "./course/CourseEdit"
+import CourseSearch from "./course/CourseSearch"
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
               <Route path='/courses/create' element={<CourseCreate />} />
               <Route path='/courses/:courseId/edit' element={<CourseEdit />} />
             </Route>
+            <Route path='/courses/search' element={<CourseSearch />} />
           </Routes>
         </main>
       </AuthenticationContextProvider>

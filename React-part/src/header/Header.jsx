@@ -26,6 +26,7 @@ export default function Header() {
                 <nav>
                     <Link to="/">Home</Link>
                     <Link to="/courses">Courses</Link>
+                    <Link to="/courses/search">Search</Link>
                     {isAuthenticated
                         ?
                         (<div className='userButtons'>

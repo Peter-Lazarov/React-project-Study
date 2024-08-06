@@ -17,10 +17,15 @@ export const getOneCourse = async (courseId) => {
     return resultAsJSON;
 }
 
-export const createCourse = async (courseData) => {
+export const getSearchedCourses = async (searchedWord) => {
+    const resultAsJSON = await requests.getUnauthorised(`${server_url}/courses/search?searchedWord=${searchedWord}`);
+    return resultAsJSON;
+}
+
+export const createCourse = async (courseData, accessToken) => {
     // console.log('in api');
     // console.log(courseData);
-    const result = await requests.post(`${server_url}/courses/create`, courseData);
+    const result = await requests.postWithCredentials(`${server_url}/courses/create`, courseData, accessToken);
 
     return result;
 }
