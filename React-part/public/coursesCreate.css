@@ -1,34 +1,44 @@
-.courseCreate{
+.courseCreate,
+.courseEdit{
 
-    margin: 0 0 0 12em;
+    margin: 0 0 1em 12em;
 }
 
 .courseCreate form{
     
 }
 
-.courseCreate form label{
+.courseCreate form label,
+.courseEdit form label{
     display: inline-block;
     width: 17%;
 }
 
 .courseCreate form .courseName,
 .courseCreate form .courseDescription,
-.courseCreate form .courseImage {
+.courseCreate form .courseImage,
+.courseEdit form .courseName,
+.courseEdit form .courseDescription,
+.courseEdit form .courseImage {
     margin: 1em 0;
 }
 
 .courseCreate form .courseName input,
 .courseCreate form .courseDescription textarea,
-.courseCreate form .courseImage input {
+.courseCreate form .courseImage input,
+.courseEdit form .courseName input,
+.courseEdit form .courseDescription textarea,
+.courseEdit form .courseImage input {
     width: 25%;
 }
 
-.courseCreate form .courseDescription textarea{
+.courseCreate form .courseDescription textarea,
+.courseEdit form .courseDescription textarea{
     height: 100px;
 }
 
-.courseCreate form .error {
+.courseCreate form .error,
+.courseEdit form .error {
     margin: 0 1em;
 }
 

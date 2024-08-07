@@ -41,7 +41,7 @@ const SearchCourses = () => {
                     <li key={course._id}>
                         <Link to={`/courses/${course._id}/details`}>
                             <h3>{course.name}</h3>
-                            <p>{course.description}</p>
+                            {/* <p>{course.description}</p> */}
                             <img src={course.image} alt={course.name} width="100" />
                             <p>Lecturer: {course.lecturerName}</p>
                         </Link>

@@ -4,7 +4,7 @@ export default function Footer() {
             <footer>
                 <div className="information">
                     <h4>Information for the project</h4>
-                    <p>The site showing my skills with React and Node.js with MongoDB</p>
+                    <p>The site showing my skills with React, Node.js and MongoDB</p>
                     <p>Theme is learning system - Study</p>
                     <p>This project is part from SoftUni JavaScript path</p>
                 </div>
