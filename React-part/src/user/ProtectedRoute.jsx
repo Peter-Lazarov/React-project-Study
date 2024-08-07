@@ -1,10 +1,32 @@
-import { Navigate, Outlet } from "react-router-dom"
-import { AuthenticationContext } from "./AuthenticationContext";
-import { useContext } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { AuthenticationContext } from './AuthenticationContext';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function ProtectedRoute() {
-    const { isAuthenticated } = useContext(AuthenticationContext);
-    return <div>{isAuthenticated ? <Outlet /> : <Navigate to='/login' />}</div>
+const ProtectedRoute = ({ children }) => {
+    const { accessToken, isAuthenticated } = useContext(AuthenticationContext);
+    const [cookies] = useCookies(['authorisation']);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (cookies.authorisation) {
+            // Update context with the token
+            // Assuming you have a method to update the context
+            setLoading(false);
+        } else {
+            setLoading(false);
+        }
+    }, [cookies]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" />;
+    }
+
+    return <Outlet />;
 };
 
 export default ProtectedRoute;

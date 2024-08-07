@@ -1,8 +1,7 @@
-import { Navigate, Route, Routes } from "react-router-dom"
-import { useContext } from "react"
+import { Route, Routes } from "react-router-dom"
 
 import { AuthenticationContextProvider } from "./user/AuthenticationContext"
-import Header from "./header/Header"
+import Header from "./core/Header"
 import Home from "./home/Home"
 import Login from "./user/Login"
 import Register from "./user/Register"
@@ -13,6 +12,7 @@ import CourseDetails from "./course/CourseDetails"
 import ProtectedRoute from "./user/ProtectedRoute"
 import CourseEdit from "./course/CourseEdit"
 import CourseSearch from "./course/CourseSearch"
+import Footer from "./core/Foorter"
 
 function App() {
 
@@ -35,10 +35,10 @@ function App() {
             <Route path='/courses/search' element={<CourseSearch />} />
           </Routes>
         </main>
+        <Footer />
       </AuthenticationContextProvider>
     </>
   )
 }
 
 export default App
-

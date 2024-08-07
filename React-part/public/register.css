@@ -5,22 +5,27 @@
     outline: none;
 }
 
-.register fieldset{
+.register fieldset {
     text-align: center;
     /* text-align: right; */
     /* margin-right: 45%; */
     border: none;
 }
 
-.register label{
+.register label {
     margin-right: 2%;
 }
 
-.register input{
-
+.register input {
+    margin: 0 0 1% 0;
 }
 
 .register input:focus {
     background-color: #aeddff;
 }
+
+.register .field span {
+    margin: 0 0 0 2%;
+}
+
 

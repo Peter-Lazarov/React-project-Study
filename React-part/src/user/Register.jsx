@@ -6,22 +6,33 @@ import { useRegister } from "./useAuthentication";
 
 
 export default function Register() {
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState({ email: '', password: '', rePassword: '',name: '' });
     const registerHook = useRegister();
     const navigate = useNavigate();
     const initialValues = { email: '', password: '', rePassword: '', name: ''};
 
-    const registerHandler = async ({ email, password, rePassword, name}) => {
-        if (password != rePassword) {
-            setError('Password missmatch!');
-            return;
-        }
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
+    const registerHandler = async ({ email, password, rePassword, name}) => {
+       
         try {
+            const emailError = validateEmail(email) ? '' : `Invalid email format ${email}`;
+            const passwordError = password.length >= 4 ? '' : 'Password must be at least 4 characters long';
+            const rePasswordError = (password == rePassword && rePassword != '') ? '' : 'Passwords do not match'
+            const nameError = name.length >= 3 ? '' : 'Name must be at least 3 characters long';
+            
+            if (emailError || passwordError || rePasswordError || nameError) {
+                setErrors({ email: emailError, password: passwordError, rePassword: rePasswordError, name: nameError });
+                return;
+            }
+            
             await registerHook(email, password, name);
-            navigate('/');
+            navigate('/login');
         } catch (error) {
-            setError(error);
+            setErrors(error);
             console.log(error);
         }
     };
@@ -43,7 +54,7 @@ export default function Register() {
                 <fieldset>
                     <h2>Registration Form</h2>
 
-                    <p className="field">
+                    <div className="field">
                         <label htmlFor="email"><span>e-mail</span></label>
                         <input
                             type="email"
@@ -53,8 +64,9 @@ export default function Register() {
                             value={formValues.email}
                             onChange={changeHandler}
                         />
-                    </p>
-                    <p className="field">
+                        {errors.email && <span className="error">{errors.email}</span>}
+                    </div>
+                    <div className="field">
                         <label htmlFor="password"><span>password</span></label>
                         <input
                             type="password"
@@ -64,8 +76,9 @@ export default function Register() {
                             onChange={changeHandler}
                             placeholder="all characters (4)"
                         />
-                    </p>
-                    <p className="field">
+                        {errors.password && <span className="error">{errors.password}</span>}
+                    </div>
+                    <div className="field">
                         <label htmlFor="rePassword"><span>re-password</span></label>
                         <input
                             type="password"
@@ -75,8 +88,9 @@ export default function Register() {
                             onChange={changeHandler}
                             placeholder="all characters (4)"
                         />
-                    </p>
-                    <p className="field">
+                        {errors.rePassword && <span className="error">{errors.rePassword}</span>}
+                    </div>
+                    <div className="field">
                         <label htmlFor="name"><span>name</span></label>
                         <input
                             type="text"
@@ -86,13 +100,8 @@ export default function Register() {
                             onChange={changeHandler}
                             placeholder="Ivan Todorov (3)"
                         />
-                    </p>
-
-                    {error && (
-                        <p className="errorField">
-                            {error}
-                        </p>
-                    )}
+                        {errors.name && <span className="error">{errors.name}</span>}
+                    </div>
 
                     <input type="submit" value="Register" />
                 </fieldset>

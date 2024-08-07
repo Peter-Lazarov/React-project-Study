@@ -16,7 +16,7 @@ const SearchCourses = () => {
             const fetchCourses = async () => {
                 const response = await getSearchedCourses(searchedWord);
                 //console.log('here 4');
-                console.log(response);
+                //console.log(response);
                 setCourses(response);
             };
 

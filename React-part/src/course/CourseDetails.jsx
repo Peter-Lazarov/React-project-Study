@@ -8,33 +8,26 @@ import useForm from "../hooks/useForm";
 
 import { AuthenticationContext } from "../user/AuthenticationContext";
 import { deleteCourse } from "./coursesService";
+import { useCreateComment, useGetAllComments } from "./useComments";
 
 const initialValues = {
-    comment: ''
+    text: ''
 }
 
 export default function CourseDetails() {
-    //const [loading, setLoading] = useState(false);
-
     const { courseId } = useParams();
-    //console.log(courseId);
-
     const [course] = useOneCourse(courseId);
-    //console.log(course);
-
-    //const [comments, setComments] = useGetAllComments(courseId);
-    //const [comments, dispatchComments] = useGetAllComments(courseId);
-    //const createComment = useCreateComment();
+    const [comments, dispatchComments] = useGetAllComments(courseId);
+    const createComment = useCreateComment();
 
     const { isAuthenticated, accessToken } = useContext(AuthenticationContext);
     const [cookies] = useCookies();
-    //console.log('here 1 ' + cookies.userId);
     const userId = cookies.userId;
 
     const isLecturer = userId == course.lecturerId;
     const navigate = useNavigate();
 
-    async function courseDeleteOnClick(){
+    async function courseDeleteOnClick() {
         try {
             await deleteCourse(courseId, accessToken);
             navigate('/courses');
@@ -47,31 +40,17 @@ export default function CourseDetails() {
         changeHandler,
         submitHandler,
         formValues
-    } = useForm(initialValues, async ({ comment }) => {
+    } = useForm(initialValues, async ({ text }) => {
 
+        //console.log(text, courseId, userId, accessToken);
         try {
-            const newComment = await createComment(courseId, comment);
+            const newComment = await createComment(text, courseId, userId, accessToken);
 
-            // //with useState
-            // if (comments != undefined && comments != null) {
-            //     const commentId = `comment${Object.keys(comments).length + 1}`;
-            //     setComments({ ...comments, [commentId]: newComment });
-            // } else {
-            //     setComments({ ...comments, newComment });
-            // }
-
-            //with useReducer
-            dispatchComments({ type: 'addCourseComments', payload: newComment })
+            dispatchComments({ type: 'addCourseComments', payload: newComment });
         } catch (error) {
             console.log(error.message);
         }
     });
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    //console.log(comments);
 
     return (
         <>
@@ -95,16 +74,32 @@ export default function CourseDetails() {
                     <Link to={`/courses/${course._id}/edit`} id='edit' >Edit</Link>
                 </div>)}
             </div>
-            
-            {isAuthenticated && !isLecturer &&(
-                <article className="create-comment">
-                    <label>Add new comment:</label>
-                    <form className="form" onSubmit={submitHandler}>
 
-                        <textarea name="comment"
+            <div className="courseCommentaries">
+                <h2>Commentaries:</h2>
+                {Object.values(comments).length > 0
+                    ?
+                    <ul>
+                        {Object.values(comments).map(comment => (
+                            <li key={comment._id} className="comment">
+                                <p>from: {comment.userId.name}</p>
+                                <p>{comment.text}</p>
+                            </li>
+                        ))}
+                    </ul>
+                    :
+                    <p className="no-comment">No commentaries.</p>
+                }
+            </div>
+
+            {isAuthenticated && !isLecturer && (
+                <article className="addComentary">
+                    <form className="form" onSubmit={submitHandler}>
+                        <label htmlFor="text">Add new commentary:</label>
+                        <textarea name="text"
                             placeholder="Comment......"
                             onChange={changeHandler}
-                            value={formValues.comment}
+                            value={formValues.text}
                         ></textarea>
                         <input className="btn submit" type="submit" value="Add Comment" />
                     </form>

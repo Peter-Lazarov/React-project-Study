@@ -1,3 +1,4 @@
+@import "reset.css";
 @import "home.css";
 @import "login.css";
 @import "register.css";
@@ -5,3 +6,5 @@
 @import "coursesList.css";
 @import "coursesDetails.css";
 @import "coursesSearch.css";
+@import "coursesCreate.css";
+@import "footer.css";

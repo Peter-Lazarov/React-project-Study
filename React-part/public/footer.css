@@ -1,0 +1,17 @@
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    background: #aeddff;
+    gap: 5em;
+    justify-content: center;
+}
+
+footer .information {
+    text-align: right;
+    flex: 0 0 39%;
+
+}
+
+footer .contacts {
+    flex: 0 0 39%;
+}

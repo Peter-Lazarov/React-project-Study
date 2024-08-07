@@ -23,11 +23,11 @@ const courseSchema = new mongoose.Schema({
     lecturerName: {
         type: String,
         ref: 'User'
-    }
-    // lecturer:{
-    //     type: ,
-    //     ref: 'User'
-    // }
+    },
+    courseCommentaries: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Commentary'
+    }]
 })
 
 const Course = mongoose.model('Course', courseSchema);

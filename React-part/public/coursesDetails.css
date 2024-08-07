@@ -68,3 +68,24 @@
 /* .courseDetails a:hover {
     background-color: #aeddff;
 } */
+
+.courseCommentaries,
+.addComentary{
+    margin: 0 6em;
+}
+
+.courseCommentaries li{
+    list-style: none;
+}
+
+.addComentary label{
+    margin: 0 1em 0 0;
+    display: block;
+}
+
+.addComentary textarea{
+    width: 30em;
+    height: 7em;
+    display: block;
+    margin: 1em 0;
+}

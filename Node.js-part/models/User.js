@@ -21,10 +21,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Course'
     }],
-    // publishedCommentary: [{
-    //     type: mongoose.Types.ObjectId,
-    //     ref: 'Commentary'
-    // }]
+    userCommentaries: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Commentary'
+    }]
 },
     { timestamps: true });
 

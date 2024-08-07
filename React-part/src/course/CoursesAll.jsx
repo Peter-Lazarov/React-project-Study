@@ -22,7 +22,7 @@ export default function CoursesAll() {
                                     <Link to={`/courses/${course._id}/details`}>
                                         <img src={course.image} alt={course.name} />
                                         <h3>{course.name}</h3>
-                                        <span>Details</span>
+                                        <p>Lecturer - {course.lecturerName}</p>
                                     </Link>
                                 </li>
                             ))}

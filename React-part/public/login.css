@@ -17,10 +17,13 @@
 }
 
 .login input{
-
+    margin: 0 0 2% 0;
 }
 
 .login input:focus {
     background-color: #aeddff;
 }
 
+.login .field span{
+    margin: 0 0 0 2%;
+}

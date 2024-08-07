@@ -1,0 +1,34 @@
+.courseCreate{
+
+    margin: 0 0 0 12em;
+}
+
+.courseCreate form{
+    
+}
+
+.courseCreate form label{
+    display: inline-block;
+    width: 17%;
+}
+
+.courseCreate form .courseName,
+.courseCreate form .courseDescription,
+.courseCreate form .courseImage {
+    margin: 1em 0;
+}
+
+.courseCreate form .courseName input,
+.courseCreate form .courseDescription textarea,
+.courseCreate form .courseImage input {
+    width: 25%;
+}
+
+.courseCreate form .courseDescription textarea{
+    height: 100px;
+}
+
+.courseCreate form .error {
+    margin: 0 1em;
+}
+

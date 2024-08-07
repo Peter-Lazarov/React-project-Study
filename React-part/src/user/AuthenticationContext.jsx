@@ -1,37 +1,45 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 export const AuthenticationContext = createContext({
-    userId: '',
-    email: '',
-    accessToken: '',
+    userId: null,
+    email: null,
+    accessToken: null,
     isAuthenticated: false,
-    addCookieAuthenticationState: (authenticationState = '') => null,
-    logoutAuthenticationState: () => null
+    logoutAuthenticationState: () => {}
 });
 
 export function AuthenticationContextProvider(props) {
-    const [authenticationState, setAuthenticationState] = useState('');
+    const [cookies] = useCookies(['authorisation']);
+    const [contextData, setContextData] = useState({
+        userId: null,
+        email: null,
+        accessToken: null,
+        isAuthenticated: false
+    });
 
-    function addCookieAuthenticationState(authenticationToken) {
-        setAuthenticationState(authenticationToken);
-    };
+    useEffect(() => {
+        const token = cookies.authorisation;
+        if (token) {
+            setContextData({
+                ...contextData,
+                accessToken: token,
+                isAuthenticated: !!token
+            });
+        }
+    }, [cookies]);
 
     function logoutAuthenticationState() {
-        setAuthenticationState('');
-    };
-
-    let contextData = {};
-
-    contextData = {
-        accessToken: authenticationState,
-        isAuthenticated: !!authenticationState,
-        addCookieAuthenticationState,
-        logoutAuthenticationState
-    };
-
+        setContextData({
+            userId: null,
+            email: null,
+            accessToken: null,
+            isAuthenticated: false
+        });
+    }
 
     return (
-        <AuthenticationContext.Provider value={contextData}>
+        <AuthenticationContext.Provider value={{ ...contextData, logoutAuthenticationState }}>
             {props.children}
         </AuthenticationContext.Provider>
     );

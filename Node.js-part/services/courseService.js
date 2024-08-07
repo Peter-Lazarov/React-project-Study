@@ -9,8 +9,8 @@ exports.create = async (courseData) => {
         lecturerName: courseData.userName
     });
 
-    const createdCourseId = createdCourse.courseId;
     const createdCourseUserId = courseData.userId;
+    const createdCourseId = createdCourse._id;
 
     await User.findOneAndUpdate({ _id: createdCourseUserId }, { $push: { coursesLecturer: createdCourseId } });
 

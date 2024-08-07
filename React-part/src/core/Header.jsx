@@ -2,23 +2,10 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthenticationContext } from "../user/AuthenticationContext";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
 
 export default function Header() {
-    //const { isAuthenticated } = useContext(AuthenticationContext);
-
-    const { isAuthenticated, addCookieAuthenticationState } = useContext(AuthenticationContext);
-    //const [cookies] = useCookies(['authorisation']); // Get the 'authorisation' cookie
-    const [cookies] = useCookies();
-
-    useEffect(() => {
-        // Set authentication state based on the cookie
-        addCookieAuthenticationState(cookies.authorisation);
-        //console.log(cookies.userId);
-        //console.log(cookies.userEmail);
-        //console.log(cookies.userName);
-    }, [cookies.authorisation, addCookieAuthenticationState]);
+    const { isAuthenticated } = useContext(AuthenticationContext);
+    //console.log('in Header 4 ');
 
     return (
         <>
