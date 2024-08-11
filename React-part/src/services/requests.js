@@ -48,14 +48,9 @@ async function post(url, data, accessToken){
         'Content-Type': 'application/json'
     };
 
-    //const accessToken = localStorage.getItem('accessToken');
-    //const accessToken = getAccessToken();
-    
-    if(accessToken){
-        options.headers['X-Authorization'] = accessToken;
-    }
-
     options.body = JSON.stringify(data);
+
+    options.credentials = 'include';
     
     const response = await fetch(url, options);
     const result = await response.json();

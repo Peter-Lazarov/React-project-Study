@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { getAllCourses, getOneCourse, createCourse } from "./coursesService";
+import { getAllCourses, getOneCourse } from "./coursesService";
 
 export function useAllCourses() {
     const [course, setCourse] = useState([]);
@@ -41,13 +41,4 @@ export function useOneCourse(courseId) {
 
 
     return [course, setCourse];
-}
-
-export function useCreateCourse() {
-    const courseCreateHandler = async (courseData) => {
-        const result = await createCourse(courseData);
-        return result;
-    }
-
-    return courseCreateHandler;
 }

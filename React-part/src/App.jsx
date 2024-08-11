@@ -9,10 +9,11 @@ import Logout from "./user/Logout"
 import CoursesAll from "./course/CoursesAll"
 import CourseCreate from "./course/CourseCreate"
 import CourseDetails from "./course/CourseDetails"
-import ProtectedRoute from "./user/ProtectedRoute"
 import CourseEdit from "./course/CourseEdit"
 import CourseSearch from "./course/CourseSearch"
 import Footer from "./core/Foorter"
+import PublicRoute from "./user/PublicRoute"
+import ProtectedRoute from "./user/ProtectedRoute"
 
 function App() {
 
@@ -23,8 +24,10 @@ function App() {
         <main id="main-content">
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route element={<PublicRoute />} >
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
             <Route path='/logout' element={<Logout />} />
             <Route path='/courses' element={<CoursesAll />} />
             <Route path='/courses/:courseId/details' element={<CourseDetails />} />

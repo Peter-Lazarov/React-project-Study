@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
@@ -52,6 +52,11 @@ export default function CourseDetails() {
         }
     });
 
+    const memoizedChangeHandler = useCallback((event) => {
+        const { name, value } = event.target;
+        changeHandler({ name, value });
+    }, [changeHandler]);
+
     return (
         <>
             <div className="courseDetails">
@@ -98,7 +103,7 @@ export default function CourseDetails() {
                         <label htmlFor="text">Add new commentary:</label>
                         <textarea name="text"
                             placeholder="Comment......"
-                            onChange={changeHandler}
+                            onChange={memoizedChangeHandler}
                             value={formValues.text}
                         ></textarea>
                         <input className="btn submit" type="submit" value="Add Comment" />

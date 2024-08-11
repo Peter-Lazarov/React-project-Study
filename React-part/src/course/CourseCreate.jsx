@@ -1,10 +1,9 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import { useCreateCourse } from "./useCourses";
 import { AuthenticationContext } from "../user/AuthenticationContext";
-import { useState } from "react";
+import { createCourse } from "./coursesService";
 
 const initialValues = {
     name: '',
@@ -27,17 +26,16 @@ const validateImage = (image) => {
 };
 
 export default function CourseCreate(){
-    const navigate = useNavigate();
-    const createCourse = useCreateCourse();
     const [cookies] = useCookies();
-       
+    
     const { accessToken } = useContext(AuthenticationContext);
     const userId = cookies.userId;
     const userName = cookies.userName;
-
+    
     const [formValues, setFormValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
-
+    
+    const navigate = useNavigate();
     const changeHandler = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -66,6 +64,7 @@ export default function CourseCreate(){
             const createdCourse = await createCourse(valuesWithLecturer, accessToken);
             navigate(`/courses/${createdCourse._id}/details`);
         } catch (error) {
+            setErrors({...errors, additional: error.error});
             console.log(error);
         }
     };
@@ -88,6 +87,7 @@ export default function CourseCreate(){
         <>
             <div className="courseCreate">
                 <h2>add Course</h2>
+                {errors.additional && <span className="serverError">{errors.additional}</span>}
                 <form onSubmit={submitHandler}>
                     <div className="courseName">
                         <label htmlFor="name">Course name</label>

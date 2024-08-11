@@ -31,6 +31,7 @@ courseController.post('/create', userMiddleware.attachUserInRequest, userMiddlew
         const createdCourse = await courseService.create(courseForm);
         //console.log(request.body);
         //console.log(createdCourse);
+        //throw new Error("Simulated server error at create");
         response.json(createdCourse);
     } catch (error) {
         console.error(error);
@@ -62,6 +63,7 @@ courseController.put('/:courseId/update', userMiddleware.attachUserInRequest, us
         const courseEditForm = request.body;
         //console.log(courseEditForm);
         try {
+            //throw new Error("Simulated server error at edit");
             const courseEdited = await courseService.edit(searchedCourseId, courseEditForm);
             //response.redirect(`/course/${request.params.courseId}/details`);
             //console.log(courseEdited);

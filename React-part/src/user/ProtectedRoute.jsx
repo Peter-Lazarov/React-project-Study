@@ -3,8 +3,8 @@ import { useCookies } from 'react-cookie';
 import { AuthenticationContext } from './AuthenticationContext';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-    const { accessToken, isAuthenticated } = useContext(AuthenticationContext);
+const ProtectedRoute = () => {
+    const { isAuthenticated } = useContext(AuthenticationContext);
     const [cookies] = useCookies(['authorisation']);
     const [loading, setLoading] = useState(true);
 

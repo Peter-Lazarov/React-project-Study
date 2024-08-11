@@ -3,10 +3,10 @@ import { useState } from "react";
 export default function useForm(initialValues, submitCallback){
     const [formValues, setFormValues] = useState(initialValues);
 
-    const changeHandler = ({name, value}) => {
+    const changeHandler = (event) => {
         setFormValues(state => ({
             ...state,
-            [name]: value
+            [event.target.name]: event.target.value
         }))
     };
 

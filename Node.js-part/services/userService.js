@@ -33,12 +33,14 @@ exports.login = async (userData) => {
     const userFromDatabase = await User.findOne({ email: userData.email })
 
     if (!userFromDatabase) {
-        throw new Error('User or Password do not match - user');
+        //throw new Error('User do not match');
+        throw new Error('User or Password do not match');
     }
 
     const isValid = await bcrypt.compare(userData.password, userFromDatabase.password);
     if(!isValid){
-        throw new Error('User or Password do not match - password');
+        //throw new Error('Password do not match');
+        throw new Error('User or Password do not match');
     }
 
     const token = await generateToken(userFromDatabase);

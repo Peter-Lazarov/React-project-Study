@@ -1,38 +1,38 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useForm from "../hooks/useForm";
-import { useRegister } from "./useAuthentication";
+import { registerRequest } from "./authenticationService";
 
 
 export default function Register() {
-    const [errors, setErrors] = useState({ email: '', password: '', rePassword: '',name: '' });
-    const registerHook = useRegister();
+    const [errors, setErrors] = useState({ email: '', password: '', rePassword: '', name: '' });
+
     const navigate = useNavigate();
-    const initialValues = { email: '', password: '', rePassword: '', name: ''};
+    const initialValues = { email: '', password: '', rePassword: '', name: '' };
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
-    const registerHandler = async ({ email, password, rePassword, name}) => {
-       
+    const registerHandler = async ({ email, password, rePassword, name }) => {
+
         try {
             const emailError = validateEmail(email) ? '' : `Invalid email format ${email}`;
             const passwordError = password.length >= 4 ? '' : 'Password must be at least 4 characters long';
             const rePasswordError = (password == rePassword && rePassword != '') ? '' : 'Passwords do not match'
             const nameError = name.length >= 3 ? '' : 'Name must be at least 3 characters long';
-            
+
             if (emailError || passwordError || rePasswordError || nameError) {
                 setErrors({ email: emailError, password: passwordError, rePassword: rePasswordError, name: nameError });
                 return;
             }
-            
-            await registerHook(email, password, name);
+
+            await registerRequest(email, password, name);
             navigate('/login');
         } catch (error) {
-            setErrors(error);
+            setErrors({...errors, additional: error.error});
             console.log(error);
         }
     };
@@ -43,7 +43,12 @@ export default function Register() {
             initialValues,
             registerHandler
         );
-    
+
+    const memoizedChangeHandler = useCallback((event) => {
+        const { name, value } = event.target;
+        changeHandler({ name, value });
+    }, [changeHandler]);
+
     // console.log('formvalues');
     // console.log(formValues);
 
@@ -54,6 +59,8 @@ export default function Register() {
                 <fieldset>
                     <h2>Registration Form</h2>
 
+                    {errors.additional && <span className="serverError">{errors.additional}</span>}
+
                     <div className="field">
                         <label htmlFor="email"><span>e-mail</span></label>
                         <input
@@ -62,7 +69,7 @@ export default function Register() {
                             id="email"
                             placeholder="ivan@mail.bg (8)"
                             value={formValues.email}
-                            onChange={changeHandler}
+                            onChange={memoizedChangeHandler}
                         />
                         {errors.email && <span className="error">{errors.email}</span>}
                     </div>
@@ -73,7 +80,7 @@ export default function Register() {
                             name="password"
                             id="password"
                             value={formValues.password}
-                            onChange={changeHandler}
+                            onChange={memoizedChangeHandler}
                             placeholder="all characters (4)"
                         />
                         {errors.password && <span className="error">{errors.password}</span>}
@@ -85,7 +92,7 @@ export default function Register() {
                             name="rePassword"
                             id="rePassword"
                             value={formValues.rePassword}
-                            onChange={changeHandler}
+                            onChange={memoizedChangeHandler}
                             placeholder="all characters (4)"
                         />
                         {errors.rePassword && <span className="error">{errors.rePassword}</span>}
@@ -97,7 +104,7 @@ export default function Register() {
                             name="name"
                             id="name"
                             value={formValues.name}
-                            onChange={changeHandler}
+                            onChange={memoizedChangeHandler}
                             placeholder="Ivan Todorov (3)"
                         />
                         {errors.name && <span className="error">{errors.name}</span>}

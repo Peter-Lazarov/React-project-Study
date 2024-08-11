@@ -1,16 +1,15 @@
+import React from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useForm from "../hooks/useForm";
-import { useLogin } from "./useAuthentication";
-import { useState } from "react";
+import { loginRequest } from "./authenticationService";
 
 export default function Login() {
-    const loginHook = useLogin();
-    const navigate = useNavigate();
-
     const initialValues = { email: '', password: '' };
     const [errors, setErrors] = useState({ email: '', password: '' });
-
+    const navigate = useNavigate();
+    
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -26,54 +25,60 @@ export default function Login() {
                 return;
             }
 
-            await loginHook(email, password);
+            await loginRequest(email, password)
             navigate('/');
         } catch (error) {
-            console.log(error.message);
+            setErrors({...errors, additional: error.error});
+            console.log(error.error);
         }
     }
 
-    const { formValues,
-        changeHandler,
-        submitHandler } = useForm(
-            initialValues,
-            loginHandler
-        );
+    const { formValues, changeHandler, submitHandler } = useForm(
+        initialValues,
+        loginHandler
+    );
 
+    const memoizedChangeHandler = useCallback((event) => {
+        const { name, value } = event.target;
+        changeHandler({ name, value });
+    }, [changeHandler]);
+    
+    
     return (
         <>
             <div className="container">
                 <form className="login" onSubmit={submitHandler}>
                     <fieldset>
                         <h2>Login Form</h2>
+                        {errors.additional && <span className="serverError">{errors.additional}</span>}
                         <div className="field">
-                            <label htmlFor="email"><span></span></label>
+                            <label htmlFor="email">e-mail</label>
                             <input
                                 type="email"
                                 name="email"
                                 id="email"
                                 value={formValues.email}
-                                onChange={changeHandler}
+                                onChange={memoizedChangeHandler}
                                 placeholder="john.doe@gmail.com"
                             />
                             {errors.email && <span className="error">{errors.email}</span>}
                         </div>
                         <div className="field">
-                            <label htmlFor="password"><span></span></label>
+                            <label htmlFor="password">password</label>
                             <input
                                 type="password"
                                 name="password"
                                 id="password"
                                 value={formValues.password}
-                                onChange={changeHandler}
+                                onChange={memoizedChangeHandler}
                                 placeholder="******"
                             />
                             {errors.password && <span className="error">{errors.password}</span>}
                         </div>
-                        <input type="submit" className="btn submit" value="Login" />
+                        <button type="submit">Login</button>
                     </fieldset>
                 </form>
             </div>
         </>
-    )
+    );
 }
