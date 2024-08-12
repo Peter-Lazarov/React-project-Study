@@ -11,7 +11,7 @@ exports.register = async (userForm) => {
     const userFromDatabase = await User.findOne({ email: userForm.email });
     //console.log(userForm);
 
-    if(userFromDatabase){
+    if (userFromDatabase) {
         throw new Error('You must use another email');
     }
 
@@ -38,7 +38,7 @@ exports.login = async (userData) => {
     }
 
     const isValid = await bcrypt.compare(userData.password, userFromDatabase.password);
-    if(!isValid){
+    if (!isValid) {
         //throw new Error('Password do not match');
         throw new Error('User or Password do not match');
     }
@@ -72,11 +72,28 @@ exports.getUserName = async (userId) => {
     }
 };
 
-function generateToken(userObject){
+exports.getAll = async () => {
+    const usersAll = await User.find({
+        $where: 'this.coursesLecturer.length > 0'
+    })
+    .select('_id name coursesLecturer')
+    .populate({
+        path: 'coursesLecturer',
+        select: '_id name',
+        // populate: {
+        //     path: 'students', // Nested populate
+        //     select: '_id name email'
+        // }
+    });
+
+    return usersAll;
+}
+
+function generateToken(userObject) {
     const payload = {
         _id: userObject._id,
         email: userObject.email
     };
 
-    return jsonwebtoken.sign(payload, secretKey, { expiresIn: '2d'});
+    return jsonwebtoken.sign(payload, secretKey, { expiresIn: '2d' });
 };

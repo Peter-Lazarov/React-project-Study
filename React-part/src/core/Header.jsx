@@ -17,6 +17,7 @@ export default function Header() {
                     {isAuthenticated
                         ?
                         (<div className='userButtons'>
+                            <Link to="/lecturers">Lecturers</Link>
                             <Link to="/logout">Logout</Link>
                         </div>)
                         : (<div className='guestButtons'>

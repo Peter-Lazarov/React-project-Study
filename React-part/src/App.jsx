@@ -14,6 +14,7 @@ import CourseSearch from "./course/CourseSearch"
 import Footer from "./core/Foorter"
 import PublicRoute from "./user/PublicRoute"
 import ProtectedRoute from "./user/ProtectedRoute"
+import LecturersAll from "./lecturer/LecturersAll"
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
             <Route element={<ProtectedRoute />} >
               <Route path='/courses/create' element={<CourseCreate />} />
               <Route path='/courses/:courseId/edit' element={<CourseEdit />} />
+              <Route path='/lecturers' element={<LecturersAll />} />
             </Route>
             <Route path='/courses/search' element={<CourseSearch />} />
           </Routes>

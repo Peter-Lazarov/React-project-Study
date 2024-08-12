@@ -128,6 +128,24 @@ userController.get('/:userId/name', async (request, response) => {
     }
 });
 
+userController.get('/all', async (request, response) => {
+    try {
+        const usersAll = await userService.getAll();
+        
+        response.json(usersAll);
+    } catch (error) {
+        console.error(error);
+
+        const errorMessage = getErrorMessage(error);
+
+        if (error.name === 'ValidationError') {
+            response.status(400).json({ error: errorMessage });
+        } else {
+            response.status(500).json({ error: errorMessage });
+        }
+    }
+});
+
 // userController.put('/profile', isAuthenticated, editProfileInfo);
 
 
