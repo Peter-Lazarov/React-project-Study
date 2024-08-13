@@ -1,6 +1,14 @@
-.serverError{
-    margin: 0 0 2% 0;
-    display: block;
-    color: #ff758d;
+body {
+    margin: 0;
 }
 
+.serverError {
+    margin: 0 0 1em 0;
+    display: block;
+    color: #ff758d;
+    text-align: center;
+}
+
+.fronEndError {
+    color: #ff758d;
+}

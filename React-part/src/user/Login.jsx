@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useForm from "../hooks/useForm";
@@ -9,7 +9,7 @@ export default function Login() {
     const initialValues = { email: '', password: '' };
     const [errors, setErrors] = useState({ email: '', password: '' });
     const navigate = useNavigate();
-    
+
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -28,7 +28,7 @@ export default function Login() {
             await loginRequest(email, password)
             navigate('/');
         } catch (error) {
-            setErrors({...errors, additional: error.error});
+            setErrors({ ...errors, additional: error.error });
             console.log(error.error);
         }
     }
@@ -38,12 +38,6 @@ export default function Login() {
         loginHandler
     );
 
-    const memoizedChangeHandler = useCallback((event) => {
-        const { name, value } = event.target;
-        changeHandler({ name, value });
-    }, [changeHandler]);
-    
-    
     return (
         <>
             <div className="container">
@@ -58,10 +52,10 @@ export default function Login() {
                                 name="email"
                                 id="email"
                                 value={formValues.email}
-                                onChange={memoizedChangeHandler}
+                                onChange={changeHandler}
                                 placeholder="john.doe@gmail.com"
                             />
-                            {errors.email && <span className="error">{errors.email}</span>}
+                            {errors.email && <p className="fronEndError">{errors.email}</p>}
                         </div>
                         <div className="field">
                             <label htmlFor="password">password</label>
@@ -70,10 +64,10 @@ export default function Login() {
                                 name="password"
                                 id="password"
                                 value={formValues.password}
-                                onChange={memoizedChangeHandler}
+                                onChange={changeHandler}
                                 placeholder="******"
                             />
-                            {errors.password && <span className="error">{errors.password}</span>}
+                            {errors.password && <p className="fronEndError">{errors.password}</p>}
                         </div>
                         <button type="submit">Login</button>
                     </fieldset>

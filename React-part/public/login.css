@@ -5,25 +5,43 @@
     outline: none;
 }
 
-.login fieldset{
+.login h2, 
+.login .field{
+    margin: 0 0 1em 0;
+}
+
+.login h2{
     text-align: center;
+}
+
+form.login {
+    margin: 0 auto;
+    width: 28%;
+}
+
+.login fieldset {
     /* text-align: right; */
     /* margin-right: 45%; */
     border: none;
 }
 
-.login label{
+.login label {
     margin: 0 2% 0 0;
-}
-
-.login input{
-    margin: 0 0 2% 0;
+    display: inline-block;
+    text-align: right;
+    min-width: 100px;
 }
 
 .login input:focus {
     background-color: #aeddff;
 }
 
-.login .field span{
-    margin: 0 0 0 2%;
+.login .field p.fronEndError {
+    text-align: center;
+    margin: 1em 0 0 0;
+}
+
+.login button {
+    display: block;
+    margin: 0 auto;
 }

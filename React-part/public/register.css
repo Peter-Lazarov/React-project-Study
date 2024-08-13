@@ -5,25 +5,44 @@
     outline: none;
 }
 
-.register fieldset {
+.register h2, 
+.register .field{
+    margin: 0 0 1em 0;
+}
+
+.register h2{
     text-align: center;
+}
+
+form.register {
+    margin: 0 auto;
+    width: 28%;
+}
+
+.register fieldset {
     /* text-align: right; */
     /* margin-right: 45%; */
     border: none;
 }
 
 .register label {
-    margin-right: 2%;
-}
-
-.register input {
-    margin: 0 0 1% 0;
+    margin: 0 2% 0 0;
+    display: inline-block;
+    text-align: right;
+    min-width: 100px;
 }
 
 .register input:focus {
     background-color: #aeddff;
 }
 
-.register .field span {
-    margin: 0 0 0 2%;
+.register .field p.fronEndError {
+    text-align: center;
+    margin: 1em 0 0 0;
 }
+
+.register button {
+    display: block;
+    margin: 0 auto;
+}
+

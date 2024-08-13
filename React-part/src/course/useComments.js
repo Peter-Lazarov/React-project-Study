@@ -24,12 +24,6 @@ export function commentReducer(currentState, action) {
             } else {
                 return currentState;
             }
-        case 'addComments':
-            const comment = action.payload;
-            return {
-                ...currentState,
-                comment
-            }
         default:
             return currentState;
     }

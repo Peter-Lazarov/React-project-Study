@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useForm from "../hooks/useForm";
@@ -44,13 +44,8 @@ export default function Register() {
             registerHandler
         );
 
-    const memoizedChangeHandler = useCallback((event) => {
-        const { name, value } = event.target;
-        changeHandler({ name, value });
-    }, [changeHandler]);
-
-    // console.log('formvalues');
-    // console.log(formValues);
+    //console.log('formvalues');
+    //console.log(formValues);
 
     return (
         <>
@@ -69,9 +64,9 @@ export default function Register() {
                             id="email"
                             placeholder="ivan@mail.bg (8)"
                             value={formValues.email}
-                            onChange={memoizedChangeHandler}
+                            onChange={changeHandler}
                         />
-                        {errors.email && <span className="error">{errors.email}</span>}
+                        {errors.email && <p className="fronEndError">{errors.email}</p>}
                     </div>
                     <div className="field">
                         <label htmlFor="password"><span>password</span></label>
@@ -80,10 +75,10 @@ export default function Register() {
                             name="password"
                             id="password"
                             value={formValues.password}
-                            onChange={memoizedChangeHandler}
+                            onChange={changeHandler}
                             placeholder="all characters (4)"
                         />
-                        {errors.password && <span className="error">{errors.password}</span>}
+                        {errors.password && <p className="fronEndError">{errors.password}</p>}
                     </div>
                     <div className="field">
                         <label htmlFor="rePassword"><span>re-password</span></label>
@@ -92,10 +87,10 @@ export default function Register() {
                             name="rePassword"
                             id="rePassword"
                             value={formValues.rePassword}
-                            onChange={memoizedChangeHandler}
+                            onChange={changeHandler}
                             placeholder="all characters (4)"
                         />
-                        {errors.rePassword && <span className="error">{errors.rePassword}</span>}
+                        {errors.rePassword && <p className="fronEndError">{errors.rePassword}</p>}
                     </div>
                     <div className="field">
                         <label htmlFor="name"><span>name</span></label>
@@ -104,13 +99,12 @@ export default function Register() {
                             name="name"
                             id="name"
                             value={formValues.name}
-                            onChange={memoizedChangeHandler}
+                            onChange={changeHandler}
                             placeholder="Ivan Todorov (3)"
                         />
-                        {errors.name && <span className="error">{errors.name}</span>}
+                        {errors.name && <p className="fronEndError">{errors.name}</p>}
                     </div>
-
-                    <input type="submit" value="Register" />
+                    <button type="submit">Register</button>
                 </fieldset>
             </form>
         </>

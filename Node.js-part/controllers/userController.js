@@ -16,7 +16,10 @@ userController.post('/register', async (request, response) => {
         //response.cookie(authorisation, token, { httpOnly: true, sameSite: 'none', secure: true })
         //response.cookie(authorisationCookie, token, { httpOnly: true, sameSite: 'none', secure: false }); //this is better but require https
                 
-        response.cookie(authorisationCookie, token, { httpOnly: false });
+        response.cookie(userIdCookie, _id.valueOf(), { httpOnly: false });
+        response.cookie(userEmailCookie, email.valueOf(), { httpOnly: false });
+        response.cookie(authorisationCookie, token, { httpOnly: false});
+        response.cookie(userNameCookie, name, { httpOnly: false });
  
         response.json({
             _id,
@@ -77,9 +80,9 @@ userController.post('/login', async (request, response) => {
 
 userController.post('/logout', isAuthenticated, (request, response) => {
     //console.log('in logout and delete');
-    response.clearCookie(authorisationCookie).status(204);
     response.clearCookie(userIdCookie).status(204);
     response.clearCookie(userEmailCookie).status(204);
+    response.clearCookie(authorisationCookie).status(204);
     response.clearCookie(userNameCookie).status(204);
     response.json({ ok: true });
 });

@@ -23,7 +23,8 @@ exports.register = async (userForm) => {
     const userObjectWithToken = {
         _id: createdUser._id,
         email: createdUser.email,
-        token
+        token,
+        name: createdUser.name
     }
 
     return userObjectWithToken;

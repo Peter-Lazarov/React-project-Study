@@ -9,6 +9,7 @@ import useForm from "../hooks/useForm";
 import { AuthenticationContext } from "../user/AuthenticationContext";
 import { deleteCourse } from "./coursesService";
 import { useCreateComment, useGetAllComments } from "./useComments";
+import { getAllComments } from "./commentsService";
 
 const initialValues = {
     text: ''
@@ -44,18 +45,16 @@ export default function CourseDetails() {
 
         //console.log(text, courseId, userId, accessToken);
         try {
-            const newComment = await createComment(text, courseId, userId, accessToken);
+            await createComment(text, courseId, userId, accessToken);
 
-            dispatchComments({ type: 'addCourseComments', payload: newComment });
+            const courseCommentaries = await getAllComments(courseId);
+            dispatchComments({ type: 'loadComments', comments: courseCommentaries });
+
+            changeHandler({ name: 'text', value: '' });
         } catch (error) {
             console.log(error.message);
         }
     });
-
-    const memoizedChangeHandler = useCallback((event) => {
-        const { name, value } = event.target;
-        changeHandler({ name, value });
-    }, [changeHandler]);
 
     return (
         <>
@@ -103,7 +102,7 @@ export default function CourseDetails() {
                         <label htmlFor="text">Add new commentary:</label>
                         <textarea name="text"
                             placeholder="Comment......"
-                            onChange={memoizedChangeHandler}
+                            onChange={changeHandler}
                             value={formValues.text}
                         ></textarea>
                         <input className="btn submit" type="submit" value="Add Comment" />

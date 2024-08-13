@@ -1,4 +1,4 @@
-@import "reset.css";
+@import "common.css";
 @import "home.css";
 @import "login.css";
 @import "register.css";
@@ -8,5 +8,4 @@
 @import "coursesSearch.css";
 @import "coursesCreate.css";
 @import "lecturersList.css";
-@import "common.css";
 @import "footer.css";
