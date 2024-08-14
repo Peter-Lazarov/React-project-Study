@@ -19,12 +19,6 @@ form.login {
     width: 28%;
 }
 
-.login fieldset {
-    /* text-align: right; */
-    /* margin-right: 45%; */
-    border: none;
-}
-
 .login label {
     margin: 0 2% 0 0;
     display: inline-block;
